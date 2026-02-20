@@ -5,5 +5,5 @@ En este proyecto creamos un sistema de biblioteca con MVC, utilizando clases baj
 
 
 Reparto de tareas.
-Aythami Reyes: Creacion del patron MVC, su jerarquía, el main, y el README.
-Alejandro Acosta: Creacion de las demas clases. 
+Aythami Reyes: Creacion del patron MVC, su jerarquía, el main, GestorLibro, GestorPedidos, EstadoLibro y el README.
+Alejandro Acosta: Creacion de la clases Consola, Pedido, Genero, Producto.
