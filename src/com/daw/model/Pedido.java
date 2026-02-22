@@ -1,35 +1,28 @@
 package com.daw.model;
 
-public class Producto {
-    private String isbn;
-    private String titulo;
-    private String autor;
-    private Genero genero;
-    private int copiasTotales;
-    private int copiasDisponibles;
-    private EstadoLibro estado;
+import java.time.LocalDate;
 
-    public Producto(String isbn, String titulo, String autor, Genero genero, int copiasTotales) {
-        this.isbn = isbn;
-        this.titulo = titulo;
-        this.autor = autor;
-        this.genero = genero;
-        this.copiasTotales = copiasTotales;
-        this.copiasDisponibles = copiasTotales;
-        this.estado = EstadoLibro.DISPONIBLE;
+public class Pedido {
+    private Usuario usuario;
+    private Producto libro;
+    private LocalDate fechaPrestamo;
+    private LocalDate fechaVencimiento;
+    private LocalDate fechaDevolucion;
+
+    public Pedido(Usuario usuario, Producto libro) {
+        this.usuario = usuario;
+        this.libro = libro;
+        this.fechaPrestamo = LocalDate.now();
+        this.fechaVencimiento = fechaPrestamo.plusDays(30);
     }
 
-    public String getIsbn() { return isbn; }
-    public String getTitulo() { return titulo; }
-    public Genero getGenero() { return genero; }
-    public EstadoLibro getEstado() { return estado; }
-    public void setEstado(EstadoLibro estado) { this.estado = estado; }
-    public int getCopias() { return copiasDisponibles; }
-    public void setCopias(int copias) { this.copiasDisponibles = copias; }
+    public Producto getLibro() { return libro; }
+    public LocalDate getFechaDevolucion() { return fechaDevolucion; }
+    public void setFechaDevolucion(LocalDate fecha) { this.fechaDevolucion = fecha; }
 
     @Override
     public String toString() {
-        return String.format("[%s] %s - %s (%s) | Disp: %d/%d | Estado: %s", 
-            isbn, titulo, autor, genero, copiasDisponibles, copiasTotales, estado);
+        return "Préstamo: " + libro.getTitulo() + " | Usuario: " + usuario.getNombre() + 
+               " | Vence: " + fechaVencimiento;
     }
 }
