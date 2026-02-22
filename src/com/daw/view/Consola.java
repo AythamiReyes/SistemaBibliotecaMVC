@@ -6,18 +6,13 @@ import java.util.ArrayList;
 
 public class Consola {
     public void mostrarLibros(ArrayList<Producto> libros) {
-        System.out.println("\n--- CATÁLOGO DE LIBROS ---");
-        for (Producto libro : libros) {
-            System.out.println(libro);
-        }
+        System.out.println("\n--- LISTADO DE LIBROS ---");
+        for (Producto l : libros) System.out.println(l);
     }
 
-    public void mostrarUsuario(Usuario usuario) {
-        System.out.println("\nUSUARIO: " + usuario.getNombre());
-        System.out.println("Libros en posesión: " + usuario.getLibrosPrestados().size());
-    }
-
-    public void imprimirMensaje(String mensaje) {
-        System.out.println(mensaje);
+    public void mostrarUsuario(Usuario u) {
+        System.out.println("\n--- ESTADO DEL USUARIO ---");
+        System.out.println(u);
+        System.out.println("Libros actuales: " + u.getLibrosPrestados());
     }
 }
