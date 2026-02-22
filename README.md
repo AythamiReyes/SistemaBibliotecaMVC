@@ -15,4 +15,4 @@ java -cp proyecto com.daw.app.main
 
 Reparto de tareas.
 Aythami Reyes: Creacion del patron MVC, su jerarquía, el main, GestorLibro, GestorPedidos, EstadoLibro y el README.
-Alejandro Acosta: Creacion de la clases Consola, Pedido, Genero, Producto, Usuario.
+Alejandro Acosta: Creacion de la clases Consola, Pedido, Genero, Producto, Usuario y las expeciones personalizadas LibroNoDisponibleException y LimitePrestamosException
