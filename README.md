@@ -3,7 +3,16 @@ En este proyecto creamos un sistema de biblioteca con MVC, utilizando clases baj
 
 ¿Cómo ejecutamos el programa?.
 
+mkdir proyecto
+
+Compilamos.
+
+javac -d proyecto src/com/daw/app/main.java src/com/daw/controller/*.java src/com/daw/model/*.java src/com/daw/view/*.java
+
+Ejecutamos. 
+
+java -cp proyecto com.daw.app.main
 
 Reparto de tareas.
 Aythami Reyes: Creacion del patron MVC, su jerarquía, el main, GestorLibro, GestorPedidos, EstadoLibro y el README.
-Alejandro Acosta: Creacion de la clases Consola, Pedido, Genero, Producto.
+Alejandro Acosta: Creacion de la clases Consola, Pedido, Genero, Producto, Usuario.
