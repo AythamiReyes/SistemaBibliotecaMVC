@@ -12,7 +12,7 @@ public class GestorLibro {
         libros = new ArrayList<>();
     }
 
-    public void AgregarLibro(Producto libro) {
+    public void agregarLibro(Producto libro) {
         libros.add(libro);
         System.out.println("Libro añadido: " + libro.getTitulo());
     }
