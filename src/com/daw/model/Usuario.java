@@ -22,4 +22,5 @@ public class Usuario {
 
     public void agregarLibro(Producto libro) { this.librosPrestados.add(libro); }
     public void quitarLibro(Producto libro) { this.librosPrestados.remove(libro); }
+    public void agregarAlHistorial(Pedido pedido) { this.historialPrestados.add(pedido); }
 }
