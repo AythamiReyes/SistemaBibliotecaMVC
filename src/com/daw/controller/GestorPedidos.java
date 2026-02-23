@@ -29,7 +29,7 @@ public class GestorPedidos {
         if (libro.getCopias() == 0) {
             libro.setEstado(EstadoLibro.PRESTADO);
         }
-        usuario.AgregarLibro(libro);
+        usuario.agregarLibro(libro);
         pedidos.add(new Pedido(usuario, libro));
         System.out.println("Préstamo Realizado: " + usuario.getNombre() + " - " + libro.getTitulo());
     }
