@@ -4,7 +4,7 @@ public class Producto {
     private String isbn;
     private String titulo;
     private String autor;
-    private int anoPublicacion;
+    private int anioPublicacion;
     private String editorial;
     private Genero genero;
     private int copiasTotales;
@@ -15,7 +15,7 @@ public class Producto {
         this.isbn = isbn;
         this.titulo = titulo;
         this.autor = autor;
-        this.anoPublicacion = anoPublicacion;
+        this.anioPublicacion = anioPublicacion;
         this.editorial = editorial;
         this.genero = genero;
         this.copiasTotales = copiasTotales;
@@ -29,6 +29,10 @@ public class Producto {
     public Genero getGenero() { return genero; }
     public EstadoLibro getEstado() { return estado; }
     public void setEstado(EstadoLibro estado) { this.estado = estado; }
+    
+    public int getCopias() { return copiasDisponibles; }
+    public void setCopias(int copias) { this.copiasDisponibles = copias; }
+    
     public int getCopiasDisponibles() { return copiasDisponibles; }
     public void setCopiasDisponibles(int copias) { this.copiasDisponibles = copias; }
     public int getCopiasTotales() { return copiasTotales; }
@@ -36,6 +40,6 @@ public class Producto {
     @Override
     public String toString() {
         return String.format("[%s] %s - %s (%d, %s) [%s] | Disp: %d/%d | Estado: %s", 
-            isbn, titulo, autor, anoPublicacion, editorial, genero, copiasDisponibles, copiasTotales, estado);
+            isbn, titulo, autor, anioPublicacion, editorial, genero, copiasDisponibles, copiasTotales, estado);
     }
 }
