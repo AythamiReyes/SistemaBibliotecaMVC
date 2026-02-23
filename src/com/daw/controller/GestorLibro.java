@@ -5,7 +5,6 @@ import com.daw.model.Producto;
 import java.util.ArrayList;
 
 public class GestorLibro {
-
     private ArrayList<Producto> libros;
 
     public GestorLibro() {
@@ -13,43 +12,38 @@ public class GestorLibro {
     }
 
     public void agregarLibro(Producto libro) {
+        if (libro == null) throw new IllegalArgumentException("El libro no puede ser nulo.");
         libros.add(libro);
-        System.out.println("Libro añadido: " + libro.getTitulo());
     }
 
     public Producto buscarPorIsbn(String isbn) {
         for (Producto libro : libros) {
-            if (libro.getIsbn().equals(isbn)) {
-                return libro;
-            }
+            if (libro.getIsbn().equals(isbn)) return libro;
         }
         return null;
     }
 
-    public void buscarPorTitulo(String titulo) {
+    public ArrayList<Producto> buscarPorTitulo(String titulo) {
+        ArrayList<Producto> resultados = new ArrayList<>();
         for (Producto libro : libros) {
             if (libro.getTitulo().toLowerCase().contains(titulo.toLowerCase())) {
-                System.out.println(libro);
+                resultados.add(libro);
             }
         }
+        return resultados;
     }
 
-    public void buscarPorGenero(Genero genero) {
+    public ArrayList<Producto> buscarPorGenero(Genero genero) {
+        ArrayList<Producto> resultados = new ArrayList<>();
         for (Producto libro : libros) {
             if (libro.getGenero() == genero) {
-                System.out.println(libro);
+                resultados.add(libro);
             }
         }
+        return resultados;
     }
 
-    public void mostrarLibros() {
-        System.out.println("=== Los Libros ===");
-        for (Producto libro : libros) {
-            System.out.println(libro);
-        }
-    }
-
-    public ArrayList<Producto> getLibros() {
-        return libros;
+    public ArrayList<Producto> getLibros() { 
+        return libros; 
     }
 }
