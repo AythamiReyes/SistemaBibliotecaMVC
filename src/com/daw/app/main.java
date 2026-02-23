@@ -7,7 +7,7 @@ import com.daw.model.Producto;
 import com.daw.model.Usuario;
 import com.daw.view.Consola;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
         GestorLibro gestorLibro = new GestorLibro();
         GestorPedidos gestorPedidos = new GestorPedidos();
