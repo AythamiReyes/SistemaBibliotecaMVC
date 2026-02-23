@@ -5,7 +5,7 @@ import com.daw.model.*;
 import com.daw.view.Consola;
 import java.util.ArrayList;
 
-public class Main {
+public class main {
     public static void main(String[] args) {
         GestorLibro gestorLibro = new GestorLibro();
         GestorPedidos gestorPedidos = new GestorPedidos();
