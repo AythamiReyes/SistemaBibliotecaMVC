@@ -11,9 +11,9 @@ public class Main {
         GestorPedidos gestorPedidos = new GestorPedidos();
         Consola consola = new Consola();
 
-        Producto libro1 = new Producto("111", "El Quijote", "Cervantes", 1605, "Alfaguara", Genero.NOVELA, 3);
-        Producto libro2 = new Producto("222", "Dune", "Herbert", 1965, "Chilton", Genero.CIENCIA_FICCION, 2);
-        Producto libro3 = new Producto("333", "La Asistenta", "Freida McFadden", 2022, "Suma", Genero.THRILLER_PSICOLOGICO, 1);
+        Producto libro1 = new Producto("1", "El Quijote", "Cervantes", 1605, "Alfaguara", Genero.NOVELA, 3);
+        Producto libro2 = new Producto("2", "Dune", "Herbert", 1965, "Chilton", Genero.CIENCIA_FICCION, 2);
+        Producto libro3 = new Producto("3", "La Asistenta", "Freida McFadden", 2022, "Suma", Genero.THRILLER_PSICOLOGICO, 1);
 
         gestorLibro.agregarLibro(libro1);
         gestorLibro.agregarLibro(libro2);
