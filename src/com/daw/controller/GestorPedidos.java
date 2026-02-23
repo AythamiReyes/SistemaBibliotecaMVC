@@ -1,9 +1,8 @@
 package com.daw.controller;
 
-import com.daw.model.EstadoLibro;
-import com.daw.model.Pedido;
-import com.daw.model.Producto;
-import com.daw.model.Usuario;
+import com.daw.model.*;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class GestorPedidos {
@@ -14,15 +13,24 @@ public class GestorPedidos {
         pedidos = new ArrayList<>();
     }
 
-    public void prestarLibro(Usuario usuario, Producto libro) {
+    public void prestarLibro(Usuario usuario, Producto libro) throws LimitePrestamosExcedidoException, LibroNoDisponibleException {
         if (usuario.getLibrosPrestados().size() >= 3) {
-            System.out.println("Error: " + usuario.getNombre() + " ya tiene 3 libros.");
-            return;
+            throw new LimitePrestamosExcedidoException("Error: " + usuario.getNombre() + " ya tiene 3 libros.");
         }
 
-        if (libro.getEstado() != EstadoLibro.DISPONIBLE) {
-            System.out.println("Error: El libro no está disponible.");
-            return;
+        if (libro.getEstado() != EstadoLibro.DISPONIBLE || libro.getCopias() <= 0) {
+            throw new LibroNoDisponibleException("Error: El libro '" + libro.getTitulo() + "' no está disponible.");
+        }
+
+        for (Pedido p : usuario.getHistorialPrestados()) {
+            if (p.getLibro().getIsbn().equals(libro.getIsbn()) && p.getFechaDevolucion() != null) {
+                long diasPrestado = ChronoUnit.DAYS.between(p.getFechaPrestamo(), p.getFechaDevolucion());
+                long diasDesdeDevolucion = ChronoUnit.DAYS.between(p.getFechaDevolucion(), LocalDate.now());
+                
+                if (diasPrestado >= 30 && diasDesdeDevolucion < 7) {
+                    throw new LibroNoDisponibleException("Bloqueo: Deben pasar 7 días desde la devolución para volver a pedir este libro.");
+                }
+            }
         }
 
         libro.setCopias(libro.getCopias() - 1);
@@ -39,6 +47,15 @@ public class GestorPedidos {
             System.out.println("El usuario no tiene ese libro prestado.");
             return;
         }
+
+        for (Pedido p : pedidos) {
+            if (p.getLibro().equals(libro) && p.getFechaDevolucion() == null) {
+                p.setFechaDevolucion(LocalDate.now());
+                usuario.agregarAlHistorial(p);
+                break;
+            }
+        }
+
         usuario.quitarLibro(libro);
         libro.setCopias(libro.getCopias() + 1);
         libro.setEstado(EstadoLibro.DISPONIBLE);
@@ -47,17 +64,31 @@ public class GestorPedidos {
 
     public void reservarLibro(Usuario usuario, Producto libro) {
         if (libro.getEstado() == EstadoLibro.DISPONIBLE) {
-            System.out.println("El Estado del Libro está Disponible, no se puede reservar.");
+            System.out.println("El libro está disponible, no se puede reservar.");
             return;
         }
-
-        if (libro.getEstado() == EstadoLibro.RESERVADO) {
-            System.out.println("El Estado del Libro ya está Reservado.");
-            return;
-        }
-
         libro.setEstado(EstadoLibro.RESERVADO);
         System.out.println("Reserva Realizada: " + usuario.getNombre() + " reservó " + libro.getTitulo());
+    }
+
+    public ArrayList<Usuario> quienTieneElLibro(Producto libro) {
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+        for (Pedido p : pedidos) {
+            if (p.getLibro().getIsbn().equals(libro.getIsbn()) && p.getFechaDevolucion() == null) {
+                usuarios.add(p.getUsuario());
+            }
+        }
+        return usuarios;
+    }
+
+    public ArrayList<Pedido> getPedidosActivos() {
+        ArrayList<Pedido> activos = new ArrayList<>();
+        for (Pedido p : pedidos) {
+            if (p.getFechaDevolucion() == null) {
+                activos.add(p);
+            }
+        }
+        return activos;
     }
 
     public void mostrarPedidos() {
