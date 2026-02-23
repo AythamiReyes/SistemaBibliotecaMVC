@@ -1,11 +1,9 @@
 package com.daw.app;
 
-import com.daw.controller.GestorLibro;
-import com.daw.controller.GestorPedidos;
-import com.daw.model.Genero;
-import com.daw.model.Producto;
-import com.daw.model.Usuario;
+import com.daw.controller.*;
+import com.daw.model.*;
 import com.daw.view.Consola;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,58 +11,57 @@ public class Main {
         GestorPedidos gestorPedidos = new GestorPedidos();
         Consola consola = new Consola();
 
-        Producto libro1 = new Producto("1", "El Quijote", "Cervantes", Genero.NOVELA, 3);
-        Producto libro2 = new Producto("2", "Dune", "Herbert", Genero.CIENCIA_FICCION, 2);
-        Producto libro3 = new Producto("3", "La Asistenta", "Freida McFadden", Genero.THRILLER_PSICOLOGICO, 1);
+        Producto libro1 = new Producto("111", "El Quijote", "Cervantes", 1605, "Alfaguara", Genero.NOVELA, 3);
+        Producto libro2 = new Producto("222", "Dune", "Herbert", 1965, "Chilton", Genero.CIENCIA_FICCION, 2);
+        Producto libro3 = new Producto("333", "La Asistenta", "Freida McFadden", 2022, "Suma", Genero.THRILLER_PSICOLOGICO, 1);
 
-        gestorLibro.AgregarLibro(libro1);
-        gestorLibro.AgregarLibro(libro2);
-        gestorLibro.AgregarLibro(libro3);
+        gestorLibro.agregarLibro(libro1);
+        gestorLibro.agregarLibro(libro2);
+        gestorLibro.agregarLibro(libro3);
 
-        Usuario usuario1 = new Usuario("U1", "Juan Antonio");
-        Usuario usuario2 = new Usuario("U2", "Aythami Reyes");
-        Usuario usuario3 = new Usuario("U3", "Alejandro Acosta");
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+        Usuario u1 = new Usuario("U1", "Juan Antonio");
+        Usuario u2 = new Usuario("U2", "Aythami Reyes");
+        Usuario u3 = new Usuario("U3", "Alejandro Acosta");
+        usuarios.add(u1); usuarios.add(u2); usuarios.add(u3);
 
-        System.out.println();
-        consola.mostrarLibros(gestorLibro.getLibros());
+        consola.mostrarResumenBiblioteca(gestorLibro.getLibros());
 
-        System.out.println();
-        System.out.println("== Préstamos ==");
-        gestorPedidos.prestarLibro(usuario1, libro1);
-        gestorPedidos.prestarLibro(usuario2, libro2);
-        gestorPedidos.prestarLibro(usuario3, libro3);
+        consola.mostrarMensaje("\n== Ejecutando Préstamos ==");
+        try {
+            gestorPedidos.prestarLibro(u1, libro1);
+            gestorPedidos.prestarLibro(u2, libro2);
+            gestorPedidos.prestarLibro(u3, libro3);
+            consola.mostrarMensaje("Préstamos iniciales correctos.");
+        } catch (Exception e) {
+            consola.mostrarError(e.getMessage());
+        }
 
-        System.out.println();
-        System.out.println("== Límite de libros ==");
-        gestorPedidos.prestarLibro(usuario1, libro3);
+        try {
+            consola.mostrarMensaje("\n== Intentando pedir libro agotado ==");
+            gestorPedidos.prestarLibro(u1, libro3);
+        } catch (LibroNoDisponibleException | LimitePrestamosExcedidoException e) {
+            consola.mostrarError(e.getMessage());
+        }
 
-        System.out.println();
-        System.out.println("== Pedidos ==");
-        gestorPedidos.mostrarPedidos();
+        try {
+            consola.mostrarMensaje("\n== Forzando Límite de Libros ==");
+            gestorPedidos.prestarLibro(u1, libro2);
+            gestorPedidos.prestarLibro(u1, gestorLibro.getLibros().get(0));
+            gestorPedidos.prestarLibro(u1, gestorLibro.getLibros().get(0));
+        } catch (Exception e) {
+            consola.mostrarError(e.getMessage());
+        }
 
-        System.out.println();
-        System.out.println("== Reserva ==");
-        gestorPedidos.reservarLibro(usuario2, libro1);
+        ArrayList<Usuario> tienenQuijote = gestorPedidos.quienTieneElLibro(libro1);
+        consola.mostrarQuienTieneLibro(libro1, tienenQuijote);
 
-        System.out.println();
-        System.out.println("== Devolución ==");
-        gestorPedidos.devolverLibro(usuario1, libro1);
+        consola.mostrarMensaje("\n== Ejecutando Devoluciones ==");
+        gestorPedidos.devolverLibro(u1, libro1);
+        consola.mostrarMensaje("El Quijote devuelto por Juan Antonio.");
 
-        System.out.println();
-        System.out.println("== Busqueda por género ==");
-        gestorLibro.buscarPorGenero(Genero.NOVELA);
-
-        System.out.println();
-        System.out.println("== Busqueda por título ==");
-        gestorLibro.buscarPorTitulo("dune");
-
-        System.out.println();
-        System.out.println("== Estado Final ==");
-        consola.mostrarLibros(gestorLibro.getLibros());
-
-        System.out.println();
-        consola.mostrarUsuario(usuario1);
-        consola.mostrarUsuario(usuario2);
-        consola.mostrarUsuario(usuario3);
+        consola.mostrarPedidos(gestorPedidos.getPedidosActivos());
+        consola.mostrarResumenUsuarios(usuarios);
+        consola.mostrarResumenBiblioteca(gestorLibro.getLibros());
     }
 }
