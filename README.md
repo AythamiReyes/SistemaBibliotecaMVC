@@ -9,4 +9,5 @@ Como ejecutar el programa:
 
 Reparto de tareas:
 Aythami Reyes: Creacion del patron MVC, su jerarquía, el main, GestorLibro, GestorPedidos, EstadoLibro y el README.
-Alejandro Acosta: Creacion de la clases Consola, Pedido, Genero, Producto, Usuario, adaptar las versiones de codigo anteriores al codigo nuevo y las expeciones personalizadas.
+
+Alejandro Acosta: Creacion de la clases Consola, Pedido, Genero, Producto, Usuario, adaptar las versiones de codigo anteriores al codigo nuevo y las excepciones personalizadas.
