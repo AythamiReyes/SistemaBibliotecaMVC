@@ -64,7 +64,7 @@ public class GestorPedidos {
 
     public void reservarLibro(Usuario usuario, Producto libro) {
         if (libro.getEstado() == EstadoLibro.DISPONIBLE) {
-            System.out.println("El libro está disponible, no se puede reservar.");
+            System.out.println("El Estado del Libro está Disponible, se puede reservar.");
             return;
         }
         libro.setEstado(EstadoLibro.RESERVADO);
